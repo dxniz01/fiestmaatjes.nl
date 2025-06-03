@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fietsmaatjes - Frits Philips School</title>
+    <style>
+        :root {
+            --school-blauw: #005B82;  /* Diep blauw */
+            --school-groen: #00A651;  /* Fris groen */
+            --school-wit: #FFFFFF;
+            --school-grijs: #F5F5F5;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0;
+            background-color: var(--school-grijs);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--school-blauw) 0%, var(--school-groen) 100%);
+            color: var(--school-wit);
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            height: 70px;
+            margin-right: 15px;
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        
+        .container {
+            background-color: var(--school-wit);
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 768px) {
+            .two-columns {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-section, .buddies-section {
+            margin-bottom: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--school-blauw);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--school-groen);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0,166,81,0.2);
+        }
+        
+        button {
+            background-color: var(--school-blauw);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        button:hover {
+            background-color: #004A6D;
+            transform: translateY(-2px);
+        }
+        
+        button.green {
+            background-color: var(--school-groen);
+        }
+        
+        button.green:hover {
+            background-color: #009548;
+        }
+        
+        .icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+        
+        .buddies-list {
+            margin-top: 10px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .buddy-item {
+            background-color: var(--school-wit);
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border-left: 4px solid var(--school-groen);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .buddy-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
+        .buddy-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .buddy-name {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--school-blauw);
+            margin: 0;
+        }
+        
+        .buddy-class {
+            background-color: var(--school-blauw);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .buddy-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .detail-icon {
+            color: var(--school-groen);
+            margin-right: 8px;
+            font-size: 1.1em;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .message-btn {
+            background-color: var(--school-groen);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .message-btn:hover {
+            background-color: #008F43;
+        }
+        
+        .reset-info {
+            text-align: center;
+            font-style: italic;
+            color: #666;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: rgba(0,91,130,0.05);
+            border-radius: 4px;
+        }
+        
+        .message-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #888;
+        }
+        
+        .close-modal:hover {
+            color: #555;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #666;
+            font-size: 0.9em;
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .buddy-item {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--school-blauw);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #004A6D;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="https://via.placeholder.com/70x70/005B82/FFFFFF?text=FPS" alt="Frits Philips School Logo" class="logo">
+            <div>
+                <h1>Fietsmaatjes</h1>
+                <div class="subtitle">Frits Philips School - Veilig samen naar school</div>
+            </div>
+        </div>
+    </header>
+    
+    <main class="container two-columns">
+        <div class="form-section">
+            <h2><i class="fas fa-user-plus icon"></i>Meld je aan</h2>
+            <div class="form-group">
+                <label for="name">Jouw naam:</label>
+                <input type="text" id="name" placeholder="Voer je volledige naam in">
+            </div>
+            
+            <div class="form-group">
+                <label for="class">Klas:</label>
+                <select id="class">
+                    <option value="">Selecteer je klas</option>
+                    <option value="1A">1A</option>
+                    <option value="1B">1B</option>
+                    <option value="2A">2A</option>
+                    <option value="2B">2B</option>
+                    <option value="3A">3A</option>
+                    <option value="3B">3B</option>
+                    <option value="4A">4A</option>
+                    <option value="4B">4B</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="route">Fietsroute:</label>
+                <select id="route">
+                    <option value="">Selecteer je route</option>
+                    <option value="noord">Noord (Woensel/Stratum)</option>
+                    <option value="oost">Oost (Gestel/Geldrop)</option>
+                    <option value="west">West (Strijp/Tongelre)</option>
+                    <option value="zuid">Zuid (Veldhoven/Waalre)</option>
+                    <option value="meerhoven">Meerhoven</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="time">Vertrektijd:</label>
+                <input type="time" id="time" value="08:00">
+            </div>
+            
+            <button id="submitBtn" class="green">
+                <i class="fas fa-bicycle icon"></i>Zoek fietsmaatjes
+            </button>
+            
+            <div class="reset-info">
+                <i class="fas fa-info-circle"></i> De lijst wordt dagelijks om 10:00 uur automatisch gereset
+            </div>
+        </div>
+        
+        <div class="buddies-section">
+            <h2><i class="fas fa-users icon"></i>Beschikbare fietsmaatjes</h2>
+            <div class="buddies-list" id="buddiesList">
+                <div id="buddiesContainer">
+                    <!-- Hier komen de fietsmaatjes -->
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Berichten modal -->
+    <div class="message-modal" id="messageModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModal">&times;</span>
+            <h2 id="modalTitle">Bericht sturen aan <span id="recipientName"></span></h2>
+            <div class="form-group">
+                <label for="messageContent">Jouw bericht:</label>
+                <textarea id="messageContent" rows="5" placeholder="Typ hier je bericht..."></textarea>
+            </div>
+            <button id="sendMessageBtn" class="green">
+                <i class="fas fa-paper-plane icon"></i>Verstuur bericht
+            </button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Frits Philips School Eindhoven - Fietsmaatjes app</p>
+        <p>© 2023 Alle rechten voorbehouden | <a href="#" style="color: var(--school-blauw);">Privacybeleid</a></p>
+    </footer>
+
+    <script>
+        // Data opslag
+        let buddies = JSON.parse(localStorage.getItem('buddies')) || [];
+        let messages = JSON.parse(localStorage.getItem('messages')) || {};
+        
+        // Elementen
+        const nameInput = document.getElementById('name');
+        const classInput = document.getElementById('class');
+        const routeInput = document.getElementById('route');
+        const timeInput = document.getElementById('time');
+        const submitBtn = document.getElementById('submitBtn');
+        const buddiesContainer = document.getElementById('buddiesContainer');
+        const messageModal = document.getElementById('messageModal');
+        const closeModal = document.getElementById('closeModal');
+        const recipientName = document.getElementById('recipientName');
+        const messageContent = document.getElementById('messageContent');
+        const sendMessageBtn = document.getElementById('sendMessageBtn');
+        
+        // Huidig geselecteerde buddy voor berichten
+        let currentBuddy = null;
+        
+        // Controleer dagelijkse reset
+        checkDailyReset();
+        
+        // Event listeners
+        submitBtn.addEventListener('click', addBuddy);
+        closeModal.addEventListener('click', () => messageModal.style.display = 'none');
+        sendMessageBtn.addEventListener('click', sendMessage);
+        
+        // Sluit modal wanneer er buiten geklikt wordt
+        window.addEventListener('click', (event) => {
+            if (event.target === messageModal) {
+                messageModal.style.display = 'none';
+            }
+        });
+        
+        // Toon bestaande buddies
+        displayBuddies();
+        
+        // Functies
+        function addBuddy() {
+            const name = nameInput.value.trim();
+            const classVal = classInput.value;
+            const route = routeInput.value;
+            const time = timeInput.value;
+            
+            if (!name || !classVal || !route || !time) {
+                alert('Vul alle velden in!');
+                return;
+            }
+            
+            // Controleer of deze gebruiker al bestaat
+            const existingIndex = buddies.findIndex(b => b.name.toLowerCase() === name.toLowerCase());
+            
+            const newBuddy = {
+                id: Date.now().toString(),
+                name,
+                class: classVal,
+                route,
+                time,
+                timestamp: new Date().getTime()
+            };
+            
+            if (existingIndex >= 0) {
+                buddies[existingIndex] = newBuddy; // Update bestaande buddy
+            } else {
+                buddies.push(newBuddy); // Voeg nieuwe buddy toe
+            }
+            
+            saveBuddies();
+            displayBuddies();
+            
+            // Velden resetten
+            nameInput.value = '';
+            classInput.value = '';
+            routeInput.value = '';
+            timeInput.value = '08:00';
+            
+            // Feedback
+            alert(`Bedankt ${name}! Je bent nu zichtbaar voor andere fietsers.`);
+        }
+        
+        function displayBuddies() {
+            buddiesContainer.innerHTML = '';
+            
+            if (buddies.length === 0) {
+                buddiesContainer.innerHTML = `
+                    <div class="buddy-item" style="text-align: center;">
+                        <p>Nog geen fietsmaatjes beschikbaar.</p>
+                        <p>Wees de eerste die zich aanmeldt!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sorteer op tijd
+            const sortedBuddies = [...buddies].sort((a, b) => a.time.localeCompare(b.time));
+            
+            sortedBuddies.forEach(buddy => {
+                const buddyElement = document.createElement('div');
+                buddyElement.className = 'buddy-item';
+                buddyElement.innerHTML = `
+                    <div class="buddy-header">
+                        <h3 class="buddy-name">${buddy.name}</h3>
+                        <span class="buddy-class">${buddy.class}</span>
+                    </div>
+                    <div class="buddy-details">
+                        <div class="detail-item">
+                            <span class="detail-icon"><i class="fas fa-route"></i></span>
+                            <span>${getRouteName(buddy.route)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-icon"><i class="far fa-clock"></i></span>
+                            <span>Vertrekt om ${buddy.time}</span>
+                        </div>
+                    </div>
+                    <button class="message-btn" data-id="${buddy.id}">
+                        <i class="fas fa-envelope"></i> Bericht sturen
+                    </button>
+                `;
+                buddiesContainer.appendChild(buddyElement);
+            });
+            
+            // Voeg event listeners toe aan alle message buttons
+            document.querySelectorAll('.message-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const buddyId = e.currentTarget.getAttribute('data-id');
+                    openMessageModal(buddyId);
+                });
+            });
+        }
+        
+        function openMessageModal(buddyId) {
+            currentBuddy = buddies.find(b => b.id === buddyId);
+            if (!currentBuddy) return;
+            
+            recipientName.textContent = currentBuddy.name;
+            messageContent.value = '';
+            messageModal.style.display = 'flex';
+        }
+        
+        function sendMessage() {
+            const content = messageContent.value.trim();
+            if (!content) {
+                alert('Voer een bericht in!');
+                return;
+            }
+            
+            if (!currentBuddy) return;
+            
+            // Maak een nieuw bericht object
+            const newMessage = {
+                to: currentBuddy.id,
+                toName: currentBuddy.name,
+                content,
+                timestamp: new Date().getTime(),
+                read: false
+            };
+            
+            // Sla het bericht op
+            if (!messages[currentBuddy.id]) {
+                messages[currentBuddy.id] = [];
+            }
+            messages[currentBuddy.id].push(newMessage);
+            localStorage.setItem('messages', JSON.stringify(messages));
+            
+            // Sluit de modal en geef feedback
+            messageModal.style.display = 'none';
+            alert(`Je bericht aan ${currentBuddy.name} is verstuurd!`);
+        }
+        
+        function getRouteName(routeKey) {
+            const routes = {
+                'noord': 'Noord (Woensel/Stratum)',
+                'oost': 'Oost (Gestel/Geldrop)',
+                'west': 'West (Strijp/Tongelre)',
+                'zuid': 'Zuid (Veldhoven/Waalre)',
+                'meerhoven': 'Meerhoven'
+            };
+            return routes[routeKey] || routeKey;
+        }
+        
+        function saveBuddies() {
+            localStorage.setItem('buddies', JSON.stringify(buddies));
+        }
+        
+        function checkDailyReset() {
+            const lastReset = localStorage.getItem('lastReset');
+            const now = new Date();
+            const resetTime = new Date();
+            
+            // Stel reset tijd in op 10:00
+            resetTime.setHours(10, 0, 0, 0);
+            
+            // Als er nog geen reset is geweest vandaag en het is na 10:00
+            if ((!lastReset || new Date(lastReset).getDate() !== now.getDate()) && now > resetTime) {
+                buddies = [];
+                saveBuddies();
+                localStorage.setItem('lastReset', now.toString());
+                
+                // Toon een melding als de app open is tijdens reset
+                if (buddiesContainer) {
+                    const notification = document.createElement('div');
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '20px';
+                    notification.style.right = '20px';
+                    notification.style.backgroundColor = 'var(--school-groen)';
+                    notification.style.color = 'white';
+                    notification.style.padding = '15px';
+                    notification.style.borderRadius = '6px';
+                    notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+                    notification.style.zIndex = '1000';
+                    notification.innerHTML = `
+                        <i class="fas fa-sync-alt"></i> De fietsmaatjeslijst is gereset voor een nieuwe dag!
+                    `;
+                    document.body.appendChild(notification);
+                    
+                    setTimeout(() => {
+                        notification.style.opacity = '0';
+                        notification.style.transition = 'opacity 0.5s';
+                        setTimeout(() => notification.remove(), 500);
+                    }, 5000);
+                }
+            }
+        }
+        
+        // Controleer elk uur op reset
+        setInterval(checkDailyReset, 3600000);
+    </script>
+</body>
+</html>
